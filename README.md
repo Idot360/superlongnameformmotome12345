@@ -26,6 +26,7 @@ FYI:
     -this file k
     -contains instructions
 
+
 Prerequisites to run the game(testing3/ updated_image_browser.py):
 -Python 3 installed
     -with a usable IDE
