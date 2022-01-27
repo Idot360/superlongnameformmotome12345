@@ -1,20 +1,44 @@
-You have to edit this file according to the way your storyline flows
+You have to duplicate this file according to the way your storyline flows
+
 Check that:
 	the pictures are in order and named accordingly numerically
 	this file is written in the exact format
 	there are no excess spaces
 
-IMPORTANT: all numbers must be written as ( pic no. -1 / starting from 0 )
+IMPORTANT: all numbers must be written as ( pic no. -1 / starting from 0 ) for index reasons as base-10 numerical symbols start from 
 you have to write in this format(omit the words in the asterisks, they are for your guidence):
-*The branches in the storyline written as so as well as the irregularities*
+
+
+
+*The branches in the storyline written as so as well as the irregularities
+*CURLY BRACES AROUND THE WHOLE THING
+*FOR EXAMPLE: CURLY BRACE OPEN, THE PIC NO THAT BRANCHES -1 , COLON, SQUARE BRACKET OPEN, CHOICE ONE PIC -1, COMMA, CHOICE TWO PIC -1, SO ON, CLOSE SQUARE BRACKET, COMMA, SO ON, CLOSE
+
 {4:[21, 5], 9:[10, 12], 13:[14, 17], 16:[14, 17, 19]}
 
-*The index of the pictures that are the endings*
-[15, 18, 21, 22]
+
 
 *The pictures that do not lead to the immediate next, e.g. 5 -> 10 instead of 5 -> 6*
+*EXAMPLE: PIC 12 LEADS TO 17 AND PIC 21 LEADS TO 23 SO: 
 {11:16, 20:22}
 
+
+
+*The index of the pictures that are the endings*
+*EXAMPLE: SQUARE BRACKET, PIC THAT IS AN ENDING -1, SO ON, CLOSE SQUARE BRACKET
+[15, 18, 21, 22]
+
+
+
+*The index of the pictures that are the GOOD endings*
+*EXAMPLE: SQUARE BRACKET, PIC THAT IS A GOOD ENDING -1, SO ON, CLOSE SQUARE BRACKET
+[15, 18, 21, 22]
+
+
+
+******************************************************************************************************************************************************************************************
+<START FROM HERE>
+*Copy the text below and edit according to your own pictures in your new file*
 Write as so in a new file(including headers):
 Branching:
 {4:[21, 5], 9:[10, 12], 13:[14, 17], 16:[14, 17, 19]}
