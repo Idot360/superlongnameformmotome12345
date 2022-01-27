@@ -1,0 +1,29 @@
+You have to edit this file according to the way your storyline flows
+Check that:
+	the pictures are in order and named accordingly numerically
+	this file is written in the exact format
+	there are no excess spaces
+
+IMPORTANT: all numbers must be written as ( pic no. -1 / starting from 0 )
+you have to write in this format(omit the words in the asterisks, they are for your guidence):
+*The branches in the storyline written as so as well as the irregularities*
+{4:[21, 5], 9:[10, 12], 13:[14, 17], 16:[14, 17, 19]}
+
+*The index of the pictures that are the endings*
+[15, 18, 21, 22]
+
+*The pictures that do not lead to the immediate next, e.g. 5 -> 10 instead of 5 -> 6*
+{11:16, 20:22}
+
+Write as so in a new file(including headers):
+Branching:
+{4:[21, 5], 9:[10, 12], 13:[14, 17], 16:[14, 17, 19]}
+
+Exceptions:
+{11:16, 20:22}
+
+Ending Points:
+[15, 18, 21, 22]
+
+Good Endings:
+[18,22]
