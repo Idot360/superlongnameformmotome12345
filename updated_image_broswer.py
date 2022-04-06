@@ -80,7 +80,12 @@ SHOPTAGS = {
     'ESS':{'cost':100,
            'name':'Earth Saving Sim',
            'files':{'path':'scip','combi':'combi.txt'}
-           }
+           },
+    
+    'PEPPA':{'cost':300,
+           'name':'The Three Little Pigs 2',
+           'files':{'path':'tlppics','combi':'combitlp.txt'}
+           },
     
             }
 
@@ -160,12 +165,20 @@ class Windows():
                 window['Earth Saving Sim'].Update(disabled = True)
             else:
                 window['Earth Saving Sim'].Update(disabled = False)
+            if 'The Three Little Pigs 2' not in ((self.storylines).keys()):
+                window['The Three Little Pigs 2'].Update(disabled = True)
+            else:
+                window['The Three Little Pigs 2'].Update(disabled = False)
                 
         elif self.name == 'Shop':
             if 'Earth Saving Sim' in ((self.storylines).keys()):
                 window['Purchase Earth Saving Sim'].Update(disabled = True)
             else:
                 window['Purchase Earth Saving Sim'].Update(disabled = False)
+            if 'The Three Little Pigs 2' in ((self.storylines).keys()):
+                window['Purchase The Three Little Pigs 2'].Update(disabled = True)
+            else:
+                window['Purchase The Three Little Pigs 2'].Update(disabled = False)
     
     
 ##########################################################################
@@ -283,7 +296,8 @@ evan.h@outlook.com
                 ],
                 [
                     sg.Text("Available storylines: "),
-                    sg.Button("Earth Saving Sim")
+                    sg.Button("Earth Saving Sim"),
+                    sg.Button("The Three Little Pigs 2")
                 ],
                 [
                     sg.Button("Random Select")
@@ -327,7 +341,8 @@ containing the combinations: '''), sg.InputText()
                 ],
                 [
                     sg.Text("Sold storylines: "),
-                    sg.Button("Purchase Earth Saving Sim")
+                    sg.Button("Purchase Earth Saving Sim"),
+                    sg.Button("Purchase The Three Little Pigs 2")
                 ],
                             ]
         
@@ -379,6 +394,14 @@ class Gamewindow(Windows):
         self.y = 580
         self.creditchange = 0
         self.trigger = False
+        self.image_path = ''
+        self.combi_file = ''
+        self.story_choices = {}
+        self.ends = []
+        self.irregularities = {}
+        self.good_ends = []
+        self.route_choice =  []
+        self.current_route = []
         self.format = [
             [
                 sg.Button("Home"),
@@ -394,6 +417,7 @@ class Gamewindow(Windows):
                 sg.Button("Option 1"),
                 sg.Button("Option 2"),
                 sg.Button("Option 3"),
+                sg.Button("Option 4"),
             ],
         
                         ]
@@ -437,6 +461,7 @@ class Gamewindow(Windows):
                 sg.Button("Option 1"),
                 sg.Button("Option 2"),
                 sg.Button("Option 3"),
+                sg.Button("Option 4"),
             ],
         
                         ]
@@ -450,6 +475,7 @@ class Gamewindow(Windows):
         window['Option 1'].Update(disabled = True)
         window['Option 2'].Update(disabled = True)
         window['Option 3'].Update(disabled = True)
+        window['Option 4'].Update(disabled = True)
         self.trigger = False
         self.images = sorted(glob.glob(f'{self.image_path}/*.jpg')\
                                 +glob.glob(f'{self.image_path}/*.png'))
@@ -480,6 +506,7 @@ class Gamewindow(Windows):
             window['Option 1'].Update(disabled = True)
             window['Option 2'].Update(disabled = True)
             window['Option 3'].Update(disabled = True)
+            window['Option 4'].Update(disabled = True)
         
         if self.location in (self.story_choices).keys():
             self.route_choice =  self.story_choices[self.location]
@@ -498,6 +525,7 @@ class Gamewindow(Windows):
             window['Option 1'].Update(disabled = True)
             window['Option 2'].Update(disabled = True)
             window['Option 3'].Update(disabled = True)
+            window['Option 4'].Update(disabled = True)
             
             if self.location in self.good_ends:
                 self.creditchange += 100
@@ -505,7 +533,7 @@ class Gamewindow(Windows):
                 sg.Popup('''congrats on reaching a good end!
 credits obtained: 100.''', keep_on_top=True)
             else:
-                sg.Popup('Idk', keep_on_top=True)
+                sg.Popup('Neutral / Bad end', keep_on_top=True)
     
     
 ##########################################################################
@@ -523,6 +551,7 @@ credits obtained: 100.''', keep_on_top=True)
         window['Option 1'].Update(disabled = True)
         window['Option 2'].Update(disabled = True)
         window['Option 3'].Update(disabled = True)
+        window['Option 4'].Update(disabled = True)
             
         self.trigger = True
         print('trigger', self.trigger)
@@ -563,6 +592,7 @@ credits obtained: 100.''', keep_on_top=True)
         window['Option 1'].Update(disabled = True)
         window['Option 2'].Update(disabled = True)
         window['Option 3'].Update(disabled = True)
+        window['Option 4'].Update(disabled = True)
         window['Next'].Update(disabled = False)
         self.checkwindow(window)
     
@@ -575,6 +605,7 @@ credits obtained: 100.''', keep_on_top=True)
         window['Option 1'].Update(disabled = True)
         window['Option 2'].Update(disabled = True)
         window['Option 3'].Update(disabled = True)
+        window['Option 4'].Update(disabled = True)
         window['Next'].Update(disabled = False)
         self.checkwindow(window)
     
@@ -587,6 +618,20 @@ credits obtained: 100.''', keep_on_top=True)
         window['Option 1'].Update(disabled = True)
         window['Option 2'].Update(disabled = True)
         window['Option 3'].Update(disabled = True)
+        window['Option 4'].Update(disabled = True)
+        window['Next'].Update(disabled = False)
+        self.checkwindow(window)
+    
+    
+    def choice_d(self, window):
+        self.location = self.route_choice[3]
+        if self.location not in self.current_route:
+            (self.current_route).append(self.location)
+        load_image(self.images[self.location], window, self.x ,self.y)
+        window['Option 1'].Update(disabled = True)
+        window['Option 2'].Update(disabled = True)
+        window['Option 3'].Update(disabled = True)
+        window['Option 4'].Update(disabled = True)
         window['Next'].Update(disabled = False)
         self.checkwindow(window)
 
@@ -746,6 +791,22 @@ def rungame():
             window.Finalize()
             currentwindow.set_window(window)
             currentwindow.check_story(window)
+        
+        
+        if event == 'Purchase The Three Little Pigs 2':
+            currentwindow.loadpurchase('PEPPA')
+            window = currentwindow.open_new_window(window)
+            window.Finalize()
+            currentwindow.set_window(window)
+    
+    
+        if event == 'Buy The Three Little Pigs 2':
+            currentwindow.bought('PEPPA')
+            currentwindow.loadshop()
+            window = currentwindow.open_new_window(window)
+            window.Finalize()
+            currentwindow.set_window(window)
+            currentwindow.check_story(window)
     
     
         if event == 'Random Select':
@@ -758,6 +819,16 @@ def rungame():
     
         if event == 'Earth Saving Sim':
             currentwindow.story_name = "Earth Saving Sim"
+            currentwindow.image_path = (currentwindow.storylines[currentwindow.story_name])['path']
+            currentwindow.combi_file = (currentwindow.storylines[currentwindow.story_name])['combi']
+            currentwindow.loadhome()
+            window = currentwindow.open_new_window(window)
+            window.Finalize()
+            currentwindow.set_window(window)
+        
+        
+        if event == 'The Three Little Pigs 2':
+            currentwindow.story_name = "The Three Little Pigs 2"
             currentwindow.image_path = (currentwindow.storylines[currentwindow.story_name])['path']
             currentwindow.combi_file = (currentwindow.storylines[currentwindow.story_name])['combi']
             currentwindow.loadhome()
@@ -787,8 +858,9 @@ def rungame():
                 currentwindow.combi_file = general.combi_file
                 currentwindow.image_path = general.image_path
                 currentwindow.state = general.state
+                currentwindow.creditchange = 0
                 #print(currentwindow.size, currentwindow.name,
-                #      currentwindow.storylines, currentwindow.format)
+                 #      currentwindow.storylines, currentwindow.format)
                 window = currentwindow.open_new_window(window)
                 print(window)
                 window.Finalize()
@@ -805,6 +877,10 @@ def rungame():
     
         if event == "Next":
             currentwindow.succeeding(window)
+        
+        
+        if event == "Option 4":
+            currentwindow.choice_d(window)
         
 
         if event == "Option 3":
